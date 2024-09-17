@@ -12,19 +12,14 @@ public class HospitalManagementSystem {
     private static final String password = "root";
 
    public static void main(String [] args){
-       try{
-           Class.forName("com.mysql.cj.jbdc.Driver");
-       }
-       catch (ClassNotFoundException e){
-           e.printStackTrace();
-       }
+
        Scanner scanner = new Scanner(System.in);
        try{
            Connection connection = DriverManager.getConnection(url, username, password);
            Patient patient = new Patient(connection, scanner);
            Doctor doctor = new Doctor(connection);
-
-           while (true){
+           boolean systemOn = true;
+           while (systemOn){
                System.out.println("<<<--- HOSPITAL MANAGEMENT SYSTEM --->>>");
                System.out.println("1. Add Patient");
                System.out.println("2. View Patients");
@@ -38,16 +33,22 @@ public class HospitalManagementSystem {
                    case 1:
                        //Add Patient
                        patient.addPatient();
+                       break;
                    case 2:
                        // View Patients
                        patient.viewPatients();
+                       break;
                    case 3:
                        // View Doctors
                        doctor.viewDoctors();
+                       break;
                    case 4:
                        // Book Appointment
                        bookAppointment(patient, doctor, connection, scanner);
+                       break;
                    case 5:
+                       System.out.println("System is Off!");
+                       systemOn = false;
                        break;
                    default:
                        System.out.println("Enter a Valid option");
@@ -98,7 +99,7 @@ public class HospitalManagementSystem {
    }
 
    public static boolean checkDoctorAvailability(int doctorId, String appointmentDate, Connection connection){
-       String query = "select count(*) from appoitments where doctor_id = ? and appointment_date = ?";
+       String query = "select count(*) from appointments where doctor_id = ? and appointment_date = ?";
        try{
            PreparedStatement preparedStatement = connection.prepareStatement(query);
            preparedStatement.setInt(1,doctorId);

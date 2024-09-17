@@ -18,8 +18,7 @@ public class Patient {
         String name = scanner.next();
         System.out.print("Enter Patient Age: ");
         int age = scanner.nextInt();
-        scanner.next();
-        System.out.println("Eneter Patient Gender");
+        System.out.print("Enter Patient Gender: ");
         String gender = scanner.next();
 
         String query = "insert into patients(name, age, gender) values(?, ?, ?)";
@@ -48,7 +47,7 @@ public class Patient {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
             System.out.println("=== Patients ===");
-            if(resultSet.next()){
+            while (resultSet.next()){
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 int age = resultSet.getInt("age");

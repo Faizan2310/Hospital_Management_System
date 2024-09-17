@@ -1,7 +1,6 @@
 package HospitalManagementSystem;
 
 import java.sql.*;
-import java.util.Scanner;
 
 public class Doctor {
     private Connection connection;
@@ -18,7 +17,7 @@ public class Doctor {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
 
-            if(resultSet.next()){
+            while (resultSet.next()){
                 int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 String specialization = resultSet.getString("specialization");
