@@ -47,12 +47,13 @@ public class Patient {
             String query = "select * from patients";
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
-
+            System.out.println("=== Patients ===");
             if(resultSet.next()){
+                int id = resultSet.getInt("id");
                 String name = resultSet.getString("name");
                 int age = resultSet.getInt("age");
                 String gender = resultSet.getString("gender");
-                System.out.println("Patient: " + name + " | " + "Age: " + age + " | " + "Gender: " + gender + " | ");
+                System.out.println("| Patient Id: " + id + " | " + "Patient: " + name + " | " + "Age: " + age + " | " + "Gender: " + gender + " | ");
                 System.out.println(" ");
             }
 
